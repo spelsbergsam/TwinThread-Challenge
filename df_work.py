@@ -58,4 +58,18 @@ def searchTopLevel(df):
 
 
 def uniqueClass(df):
-    return None
+    """room for optimization: builds list of unique class names, as well as
+       list of names of assets that correspond to each class name simultaneously"""
+    unique_classes = []
+    assets = {}
+    for index, row in df.iterrows():
+        for name in row['classList.name']:
+            if name not in unique_classes:
+                unique_classes.append(name)
+                assets[name] = [row['name']]
+            else:
+                assets[name].append(row['name'])
+
+    print("There are ", len(unique_classes), "unique classes")
+    for key in assets:
+        print(key, ": ", assets[key], '\n\n')
